@@ -1086,6 +1086,9 @@ EOF
     ppcle:Linux:*:*)
 	echo powerpcle-unknown-linux-"$LIBC"
 	exit ;;
+    riscv-unknown-caffeinix*)
+    	echo riscv-unknown-caffeinix
+    	;;
     riscv32:Linux:*:* | riscv32be:Linux:*:* | riscv64:Linux:*:* | riscv64be:Linux:*:*)
 	echo "$UNAME_MACHINE"-unknown-linux-"$LIBC"
 	exit ;;

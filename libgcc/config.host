@@ -386,6 +386,14 @@ i[34567]86-*-cygwin* | x86_64-*-cygwin*)
 esac
 
 case ${host} in
+riscv32*-*-caffeinix*)
+    tmake_file="${tmake_file} riscv/t-softfp${host_address} t-softfp riscv/t-elf riscv/t-elf${host_address}"
+    extra_parts="$extra_parts crtbegin.o crtend.o crti.o crtn.o"
+    ;;
+riscv64*-*-caffeinix*)
+    tmake_file="${tmake_file} riscv/t-softfp${host_address} t-softfp riscv/t-elf riscv/t-elf${host_address}"
+    extra_parts="$extra_parts crtbegin.o crtend.o crti.o crtn.o"
+    ;;
 aarch64*-*-elf | aarch64*-*-rtems*)
 	extra_parts="$extra_parts crtbegin.o crtend.o crti.o crtn.o"
 	extra_parts="$extra_parts crtfastmath.o"

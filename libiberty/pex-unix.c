@@ -27,6 +27,8 @@ Boston, MA 02110-1301, USA.  */
 #include <stdio.h>
 #include <signal.h>
 #include <errno.h>
+#include <fcntl.h>
+
 #ifdef NEED_DECLARATION_ERRNO
 extern int errno;
 #endif
@@ -449,7 +451,7 @@ restore_fd(int old_fd, int save_fd, int flags)
 #ifdef HAVE_DUP3
   if (flags == FD_CLOEXEC)
     {
-      if (dup3 (save_fd, old_fd, O_CLOEXEC) < 0)
+      if (dup3 (save_fd, old_fd, FD_CLOEXEC) < 0)
 	return -1;
     }
   else
@@ -579,13 +581,13 @@ pex_unix_exec_child (struct pex_obj *obj, int flags, const char *executable,
   };
   volatile int do_pipe = 0;
   volatile int pipes[2]; /* [0]:reader,[1]:writer.  */
-#ifdef O_CLOEXEC
+#ifdef FD_CLOEXEC
   do_pipe = 1;
 #endif
   if (do_pipe)
     {
 #ifdef HAVE_PIPE2
-      if (pipe2 ((int *)pipes, O_CLOEXEC))
+      if (pipe2 ((int *)pipes, FD_CLOEXEC))
 	do_pipe = 0;
 #else
       if (pipe ((int *)pipes))
